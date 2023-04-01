@@ -1,87 +1,63 @@
-import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
-import Loader from './Loader/Loader';
-import Button from './Button/Button';
-import Modal from './Modal/Modal';
 import css from '../ImageGallery/ImageGallery.module.css';
 
-const API_KEY = '22160943-514fc90dc5a1a6996be2229bd';
+export default function ImageGallery({ openModal, images }) {
+  // const [images, setImages] = useState([]);
+  // const [pageValue, setPageValue] = useState(1);
+  // const [loader, setLoader] = useState(false);
+  // const [dataModal, setDataModal] = useState('');
+  // const formValueRef = useRef('');
 
-function fetchImages(formValue, pageValue) {
-  try {
-    const response = axios
-      .get(
-        `https://pixabay.com/api/?q=${formValue}&page=${pageValue}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-      )
-      .then(response => response.data.hits);
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-}
+  // useEffect(() => {
+  //   if (formValue === '') {
+  //     return;
+  //   }
 
-export default function ImageGallery({ formValue }) {
-  const [images, setImages] = useState([]);
-  const [pageValue, setPageValue] = useState(1);
-  const [loader, setLoader] = useState(false);
-  const [dataModal, setDataModal] = useState('');
-  const formValueRef = useRef('');
+  //   if (formValue !== formValueRef.current) {
+  //     setImages([]);
+  //     setPageValue(1);
+  //   }
 
-  useEffect(() => {
-    if (formValue === '') {
-      return;
-    }
+  //   setLoader(true);
 
-    if (formValue !== formValueRef.current) {
-      setImages([]);
-      setPageValue(1);
-    }
+  //   ServiceAPI(formValue, pageValue).then(dataImages => {
+  //     setImages(prevImages => [...prevImages, ...dataImages]);
+  //     setLoader(false);
+  //   });
 
-    setLoader(true);
+  //   formValueRef.current = formValue;
+  // }, [formValue, pageValue]);
 
-    fetchImages(formValue, pageValue).then(dataImages => {
-      setImages(prevImages => [...prevImages, ...dataImages]);
-      setLoader(false);
-    });
+  // const handleClickLoadMore = () => {
+  //   setPageValue(prevPageValue => prevPageValue + 1);
+  // };
 
-    formValueRef.current = formValue;
-  }, [formValue, pageValue]);
+  // const CloseModal = e => {
+  //   setDataModal('');
+  // };
 
-  const handleClickLoadMore = () => {
-    setPageValue(prevPageValue => prevPageValue + 1);
-  };
+  // const openModal = largeImageURL => {
+  //   setDataModal(largeImageURL);
+  // };
 
-  const CloseModal = e => {
-    setDataModal('');
-  };
+  // useEffect(() => {
+  //   const handleKeyDowd = e => {
+  //     if (e.code === 'Escape') {
+  //       setDataModal('');
+  //     }
+  //   };
 
-  const openModal = largeImageURL => {
-    setDataModal(largeImageURL);
-  };
+  //   window.addEventListener('keydown', handleKeyDowd);
 
-  useEffect(() => {
-    const handleKeyDowd = e => {
-      if (e.code === 'Escape') {
-        setDataModal('');
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDowd);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDowd);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('keydown', handleKeyDowd);
+  //   };
+  // }, []);
 
   return (
     <div className={css.ImageGalleryWrapper}>
-      {dataModal !== '' && (
-        <Modal largeImageURL={dataModal} onClick={CloseModal} />
-      )}
-
       <ul className={css.ImageGallery}>
         {images.map(({ id, webformatURL, largeImageURL }) => (
           <ImageGalleryItem
@@ -89,16 +65,14 @@ export default function ImageGallery({ formValue }) {
             id={id}
             webformatURL={webformatURL}
             largeImageURL={largeImageURL}
-            onClick={openModal}
+            openModal={openModal}
           />
         ))}
       </ul>
-      {loader && <Loader />}
-      {images.length > 0 && <Button onClick={handleClickLoadMore} />}
     </div>
   );
 }
-Modal.propTypes = {
-  largeImageURL: PropTypes.string,
-  onClick: PropTypes.func,
-};
+// Modal.propTypes = {
+//   largeImageURL: PropTypes.string,
+//   onClick: PropTypes.func,
+// };
