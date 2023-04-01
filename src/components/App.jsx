@@ -8,7 +8,6 @@ import ServiceAPI from './ServiceAPI/ServiceAPI';
 import Loader from './Loader/Loader';
 import Button from './Button/Button';
 
-// const STATUS = { IDLE: 'idle' };
 export function App() {
   const [images, setImages] = useState([]);
   const [pageValue, setPageValue] = useState(1);
