@@ -58,3 +58,4 @@ export function App() {
 
 Searchbar.propTypes = { handleFormSubmit: PropTypes.func };
 ImageGallery.propTypes = { formValue: PropTypes.string };
+Button.propTypes = { onClick: PropTypes.func };

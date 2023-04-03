@@ -1,8 +1,8 @@
 import { useState } from 'react';
-
+import PropTypes from 'prop-types';
 import Modal from './Modal/Modal';
-
 import css from '../ImageGalleryItem/ImageGalleryItem.module.css';
+
 export default function ImageGalleryItem({ id, webformatURL, largeImageURL }) {
   const [dataModal, setDataModal] = useState('');
 
@@ -28,3 +28,8 @@ export default function ImageGalleryItem({ id, webformatURL, largeImageURL }) {
     </>
   );
 }
+
+Modal.propTypes = {
+  largeImageURL: PropTypes.string,
+  toggleModal: PropTypes.func,
+};
